@@ -7,6 +7,9 @@ The basic gates that can be present in the input circuit are: (I, H, X, Y, Z, Rx
 
 ### 1. Finding the equivalent circuit for all input gates
 
+To find the equivalent circuit for an input gate, I use the [DiVincenzo-Smolin scheme](https://arxiv.org/abs/cond-mat/9409111). This is an exhaustive approach that performs decomposition of a unitary matrix in SU(8) into a sequence of two-qubit gates (SU(4) matrices). Even though it focuses on three-qubit gates, it is extendable to unitary in arbitrary dimensions. The non-linear function that needs to be minimized is:
+
+<img src="https://render.githubusercontent.com/render/math?math=f = \sum_{i}\sum_{j}|M_{ij} - S_{ij}|^{2}">
 
 
 
@@ -14,11 +17,6 @@ The basic gates that can be present in the input circuit are: (I, H, X, Y, Z, Rx
 
 
 
-
-
-
-The DiVincenzo-Smolin scheme [55] is a systematic, exhaustive approach, that performs a decomposition of a unitary matrix in SU(8) into a sequence of two-qubit gates (SU(4) matrices) that is called a two-bit gate network. The scheme focuses on the decomposition of three-qubit gates, but it is extendable to unitary in arbitrary dimensions, viz., SU(2n) for n ∈ N. It had been believed that a three-qubit gate is necessary for universality, implied by the result of Deutsch [164], until some years later, DiVincenzo proved that two-qubit gates are also universal [16]. Moreover, in [164], the efficiency (in the gate-depth sense) of implementing a SU(2n) matrix is not addressed. The DiVincenzo-Smolin scheme addressed Deutsch’s issues by providing an explicit implementation to obtain a two-qubit network of a SU(8) matrix. Here, we provide an extension of the DiVincenzo-Smolin scheme that works for an arbitrary dimensional unitary.
-The gist of DiVincenzo-Smolin’s scheme lies in the non-linear minimization pro- cedure of a gate network. A gate network is characterized by its two-bit gate topology that is defined in Definition 6.1. Now, let us discuss gate topologies in more detail.
 
 
 
@@ -27,7 +25,6 @@ The gist of DiVincenzo-Smolin’s scheme lies in the non-linear minimization pro
 
 
 The DiVincenzo-Smolin scheme in Algorithm 6.1 performs a decomposition of an SU(2n) unitary matrix M, sought within combinations of N two-qubit gates, and
-3
 ones; this can be done by a particular search scheme, e.g., Algorithm 6.2. One may choose a suitable non-linear minimization scheme. For instance, DiVincenzo-Smolin scheme employs the Broyden-Fletcher-Goldfarb-Shanno algorithm (BFGS) [165] with the objective function defined as
 f :=􏰜􏰜|Mij −Sij|2, (6.2) ij
 ⃗⃗ where S is the total resulting matrix from gate network N(Φ), where N(Φ) is
