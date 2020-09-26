@@ -5,7 +5,7 @@ The basic gates that can be present in the input circuit are: (I, H, X, Y, Z, Rx
 
 ## Working of the program
 
-# 1. Finding the equivalent circuit for all input gates
+### 1. Finding the equivalent circuit for all input gates
 
 
 
