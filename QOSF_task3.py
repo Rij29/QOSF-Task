@@ -76,18 +76,15 @@ def output_template1(x,j):
         :x: This is the list of angles for the Rz and Rx gates
         
     """
-    #p0,p1 = np.pi*x[0],np.pi*x[1]
     p0,p1 = x[0],x[1]
     
     if(j==1):
         U = np.exp(1j*p0)*Rz(p1)
     elif(j==2):
-        #p2 = np.pi*x[2]
         p2 = x[2]
         
         U = np.exp(1j*p0)*(Rx(p2)@Rz(p1))
     elif (j==3):
-        #p2, p3 = np.pi*x[2], np.pi*x[3]
         p2, p3 = x[2], x[3]
         
         U = np.exp(1j*p0)*(Rz(p3)@Rx(p2)@Rz(p1))
@@ -106,7 +103,6 @@ def output_template2(x,j):
         :x: This is the list of angles for the Rz and Rx gates
         
     """
-   # p0,p1,p2 = np.pi*x[0],np.pi*x[1],np.pi*x[2]
     p0,p1,p2 = x[0],x[1],x[2]
     
     if(j==1):
@@ -114,7 +110,6 @@ def output_template2(x,j):
         U = np.exp(1j*p0)*a
     
     if(j==2):
-        #p3,p4 = np.pi*x[3], np.pi*x[4]
         p3,p4 = x[3], x[4]
         
         a = kron(Rx(p4)) @ kron(Rz(p3))
@@ -123,7 +118,6 @@ def output_template2(x,j):
         U = np.exp(1j*p0)*c
         
     if(j==3):
-        #p3, p4, p5, p6 = np.pi*x[3], np.pi*x[4], np.pi*x[5], np.pi*x[6]
         p3, p4, p5, p6 = x[3], x[4], x[5], x[6]
         
         a = kron(Rz(p6)) @ kron(Rx(p5)) @ kron(Rz(p4))
