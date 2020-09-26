@@ -214,7 +214,7 @@ def optimization_func(M,qubitgate,count=0):
                 x = np.random.uniform(low=0.0,high=b,size=(2*j)+1)
                 #x = [1]+[0.5]*(2*j)
                 bounds = [(0,b)] *((2*j)+1)
-                result = minimize(objective_function, x, args=(M,j,qubitgate), method='TNC', bounds=bounds, options={'gtol': 1e-06})
+                result = minimize(objective_function, x, args=(M,j,qubitgate), method='L-BFGS-B', bounds=bounds, options={'gtol': 1e-06})
                 succ_run = result.success
                 #print('j=',j,', success:',succ_run)
         if(math.floor(result.fun*100)==0):
