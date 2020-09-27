@@ -10,15 +10,19 @@ The basic gates that can be present in the input circuit are: (I, H, X, Y, Z, Rx
 To find the equivalent circuit for an input gate, I use the [DiVincenzo-Smolin scheme](https://arxiv.org/abs/cond-mat/9409111). This is an exhaustive approach that performs decomposition of a unitary matrix in SU(8) into a sequence of two-qubit gates (SU(4) matrices). Even though it focuses on three-qubit gates, it is extendable to unitary in arbitrary dimensions. The non-linear function that needs to be minimized is:
 
 <img src="https://render.githubusercontent.com/render/math?math=f = \displaystyle\sum_{i}\displaystyle\sum_{j}|M_{ij} - U_{ij}|^{2}">
+(Python Function : objective_function)
 
 where M is the required matrix i.e. the matrix of the input gate and U is the matrix of the circuit containing Rx,Rz and CZ gates that we test against the required matrix. 
 
 Our job is to minimize the function f numerically using any non-linear minimization tool. I have used Broyden-Fletcher-Goldfarb-Shanno algorithm (BFGS) optimization function. The successful optimization of the function, i.e. <img src="https://render.githubusercontent.com/render/math?math=|f|\leq\epsilon"> returns the required topology and the optimized measurement angles. Thus, the total operation from network gate U approximates M within error <img src="https://render.githubusercontent.com/render/math?math=\epsilon">.
+(Python Function : optimization_func)
 
 #### Creation of U-gate
 Now, I needed a U-gate composed of Rz, Rx and CZ gates only. I use the fact that all one qubit gates can be defined using the universal SU(2) unitary matrix upto a phase. I also make use of the fact that the SU(2) unitary gate can be broken down in terms of three rotation gates, i.e. <img src="https://render.githubusercontent.com/render/math?math=Rz(\alpha)Rx(\beta)Rz(\gamma)">. Thus, for all one qubit gates, my U can be <img src="https://render.githubusercontent.com/render/math?math=Rz(\alpha)"> or <img src="https://render.githubusercontent.com/render/math?math=Rz(\alpha)Rx(\beta)"> or <img src="https://render.githubusercontent.com/render/math?math=Rz(\alpha)Rx(\beta)Rz(\gamma)">. I find out the matrices for these combination of gates and test it against the required matrix using the optimization function. 
 
 Similarly, for two-qubit gates, I just add a U-gate on either side of a CZ gate i.e. <img src="https://render.githubusercontent.com/render/math?math=(I\otimes U)-CZ-(I\otimes U)"> and test the matrix of the same against the matrix of the required two-qubit gate. 
+
+(Python Function : output_template1 and output_template2)
 
 ###### Example
 The Hadamard gate comes out to be Rz(pi/2)Rx(pi/2)Rz(pi/2)
@@ -34,6 +38,8 @@ Here, q represents the qubit the gate acts on, x represents the angle for the ro
 
 I then replace each input gate with the new configuration from the dictionary, adding in the qubit as well. I let the Rx, Rz and CZ gate configuartions stay the same as given in the input circuit and to replace the Ry gate, I run the optimization depending on the angle of Ry gate and then replace it. 
 
+(Python Function : output_circuit)
+
 ### 3. Reducing the overhead of the new circuit
 I consider the depth of the circuit here. Since I am using a restricted gate set, the number of gates in the new circuit would be much more than the input circuit. To counter this issue, I optimize my new circuit as much as possible to reduce the number of gates. To do this I use the following reductions:
 
@@ -45,6 +51,7 @@ I consider the depth of the circuit here. Since I am using a restricted gate set
 
 I do these reductions multiple times till I notice there is no more possibility of reductions. 
 
+(Python Function : reducing_overhead)
 
 ## An Example run on the Program
 Input Ciruit:
